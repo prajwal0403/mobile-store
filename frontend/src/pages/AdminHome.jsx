@@ -72,7 +72,7 @@ const AdminHome = () => {
                 </Link>
                 <button
                   onClick={() => handleDelete(product.id)}
-                  className="text-red-600 hover:underline"
+                  className="text-red-600 hover:underline cursor-pointer"
                 >
                   Delete
                 </button>

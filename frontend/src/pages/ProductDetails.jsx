@@ -30,7 +30,7 @@ const ProductDetails = () => {
          <img
             src={getPlaceholderImage(product.name)}
             alt={product.name}
-            className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
+            className="w-40 h-40 rounded-full mx-auto mb-4 object-cover"
           />
         <h1 className="text-3xl font-bold mb-4 py-5">{product.name}</h1>
         <p className="text-gray-700 mb-2">

@@ -4,13 +4,12 @@ import { getPlaceholderImage } from '../common';
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="bg-white shadow-lg rounded-md overflow-hidden">
+    <div className="bg-white rounded-md overflow-hidden">
       <img
         src={getPlaceholderImage(product.name)}
         alt={product.name}
-        className="w-full h-40 object-cover"
+        className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
       />
-
       <div className="p-4">
         <h2 className="text-lg font-bold mb-1">{product.name}</h2>
         <p className="text-gray-700 text-sm mb-2 line-clamp-2">
