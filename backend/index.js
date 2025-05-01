@@ -8,13 +8,16 @@ const { sequelize } = require('./models');
 // Route handlers
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 // API Routes
 app.use('/api/auth', authRoutes);

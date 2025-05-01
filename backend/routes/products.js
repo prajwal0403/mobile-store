@@ -27,6 +27,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Add this after your existing `/` route
+router.get('/all', async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    res.json(products);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+
 // @route   GET /api/products/:id
 // @desc    Get product by ID
 // @access  Public

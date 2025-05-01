@@ -23,7 +23,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password, role } = req.body;
+    const { firstname, lastname, email, password, role } = req.body;
     try {
       // Check if user exists
       let user = await User.findOne({ where: { email } });
@@ -36,7 +36,7 @@ router.post(
       const hashedPassword = await bcrypt.hash(password, salt);
 
       // Create user
-      user = await User.create({ email, password: hashedPassword, role });
+      user = await User.create({ firstname, lastname, email, password: hashedPassword, role });
 
       // Generate JWT
       const payload = { id: user.id, role: user.role };
@@ -64,26 +64,29 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+  
     const { email, password } = req.body;
+  
     try {
       // Find user
       const user = await User.findOne({ where: { email } });
       if (!user) {
         return res.status(400).json({ msg: 'Invalid credentials' });
       }
-
-      // Check password
+  
+      // Compare passwords
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({ msg: 'Invalid credentials' });
       }
-
-      // Generate JWT
+  
+      // Create token payload
       const payload = { id: user.id, role: user.role };
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-      res.json({ token });
+  
+      // Return token and user data (excluding password)
+      const { password: _, ...userData } = user.toJSON();
+      res.json({ token, user: userData });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
